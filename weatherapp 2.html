@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html> 
+<head>
+        <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+        <title> Weather </title>
+        <link rel = "stylesheet" href = "weatherapp 2.css">
+</head>
+<body>
+<div class = "card">
+    <div class = "search">
+        <input type = "text" placeholder="enter city name" spellcheck="false">
+        <button> <img src = "search.png">
+        </button>
+    </div>
+    <div class= "weather">
+        <img src = "weather_icon.png" class = "icons" width = 200 height =200>
+        <h1 class = "temp">
+            19°C
+        </h1>
+        <h2 class = "city">
+            Los Angeles
+        </h2>
+        <div class= "details">
+            <div class= "col">
+                <img src = "humidity.png" width = 50 height = 50>
+                <div>
+                    <p class = "humidity">
+                        30%
+                    </p>
+                    <p>
+                        Humidity
+                    </p>
+                </div>
+            </div>
+            <div class= "col">
+                <img src = "wind.png" width = 50 height = 50>
+                <div>
+                    <p class = "wind">
+                        12 km/h
+                    </p>
+                    <p>
+                        Wind Speed
+                    </p>
+                </div>
+         </div>
+         <div class= "col">
+            <img src = "cloud.png" width = 50 height = 50>
+            <div>
+                <p class = "clouds">
+                    20%
+                </p>
+                <p>
+                    Cloudiness
+                </p>
+            </div>
+     </div>
+</div>
+
+<script>
+    const Key = "83aa329394e49054b019941651657b3f";
+    const url = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+    const searchName = document.querySelector(".search input");
+    const searchButton = document.querySelector(".search button");
+
+    async function Weather(city) {
+        const response = await fetch(url + city + `&appid=${Key}`);
+        var data = await response.json();
+        document.querySelector(".city").innerHTML = data.name;
+        document.querySelector(".temp").innerHTML = data.main.temp + "°C";
+        document.querySelector(".humidity").innerHTML = data.main.humidity + "%";
+        document.querySelector(".wind").innerHTML = data.wind.speed + "km/h";
+        document.querySelector(".clouds").innerHTML = data.clouds.all + "%";
+
+    }
+    searchButton.addEventListener("click", ()=>{
+        Weather(searchName.value);
+    });
+</script>
+</body>
+</html>
